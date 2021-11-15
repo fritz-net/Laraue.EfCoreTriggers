@@ -33,5 +33,8 @@ namespace Laraue.EfCoreTriggers.Common.SqlGeneration
         SqlBuilder GetTriggerInsertActionSql<TTriggerEntity, TInsertEntity>(TriggerInsertAction<TTriggerEntity, TInsertEntity> triggerInsertAction)
             where TTriggerEntity : class
             where TInsertEntity : class;
+
+        SqlBuilder GetTriggerRawSqlActionSql<TTriggerEntity>(TriggerRawSqlAction<TTriggerEntity> triggerRawSqlAction)
+            where TTriggerEntity : class;
     }
 }

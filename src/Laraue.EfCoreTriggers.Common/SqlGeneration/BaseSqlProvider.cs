@@ -187,5 +187,13 @@ namespace Laraue.EfCoreTriggers.Common.SqlGeneration
                 .Append(insertStatement.StringBuilder)
                 .Append(";");
         }
+
+
+        public SqlBuilder GetTriggerRawSqlActionSql<TTriggerEntity>(TriggerRawSqlAction<TTriggerEntity> triggerRawSqlAction)
+            where TTriggerEntity : class
+        {
+            return new SqlBuilder(triggerRawSqlAction.SqlStatement)
+                .Append(";");
+        }
     }
 }

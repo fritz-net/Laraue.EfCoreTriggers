@@ -111,5 +111,21 @@ namespace Laraue.EfCoreTriggers.Tests.Tests.Native.TriggerTests
             var saved = Assert.Single(dbContext.DestinationEntities);
             Assert.Equal(15, saved.DecimalValue);
         }
+
+        [Fact]
+        public void DeleteTrigger_ShouldCallRawSql()
+        {
+            Action<EntityTypeBuilder<SourceEntity>> builder = x =>
+                x.AfterDelete(trigger => trigger
+                    .Action(action => action
+                        .RawSql("INSERT INTO history ('bla') Values ('bla')")));
+
+            using var dbContext = CreateDbContext(builder);
+            dbContext.Save(new SourceEntity { StringField = "12" });
+            dbContext.Delete(x => x.SourceEntities);
+
+            var saved = Assert.Single(dbContext.DestinationEntities);
+            Assert.Equal("12", saved.StringField);
+        }
     }
 }
